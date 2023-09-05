@@ -43,8 +43,7 @@ const Navbar = () => {
                                 href="/login"
                                 className="btn btn-primary"
                             >
-                                Try Beta
-                            </a>
+Login                            </a>
                         </li>
                     </ul>
                 </nav>

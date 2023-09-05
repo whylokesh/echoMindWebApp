@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import 'boxicons';
-import { useState } from 'react';
 import Navbar from './Navbar';
+import { useNavigate } from 'react-router-dom';
+import { Button } from 'primereact/button';
+import { Toast } from 'primereact/toast';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 
 const LoginCard = () => {
     const loginContainerStyle = {
@@ -9,18 +13,17 @@ const LoginCard = () => {
         justifyContent: 'center',
         alignItems: 'center',
         minHeight: '75vh',
-        // background: 'linear-gradient(to right, #c31432, #240b36)',
     };
 
     const loginCardStyle = {
         background: 'white',
         padding: '30px',
         borderRadius: '15px',
-        border: '3px solid transparent', // Initially transparent border
+        border: '3px solid transparent',
         boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
         width: '400px',
         textAlign: 'center',
-        position: 'relative', // For icon positioning
+        position: 'relative',
     };
 
     const iconStyle = {
@@ -45,29 +48,16 @@ const LoginCard = () => {
         background: 'linear-gradient(to right, #ff416c, #ff4b2b)',
         color: 'white',
         cursor: 'pointer',
-        animation: 'colorChange 2s infinite alternate', // Keyframes animation
     };
 
-    const keyframesStyle = `
-    @keyframes colorChange {
-      from {
-        background: linear-gradient(to right, #ff416c, #ff4b2b);
-      }
-      to {
-        background: linear-gradient(to right, #ff4b2b, #ff416c);
-      }
-    }
-  `;
-
- 
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [loginMessage, setLoginMessage] = useState('');
+    const toastRef = useRef(null);
 
     const handleLogin = async (event) => {
         event.preventDefault();
 
-        // Create an object to hold login data
         const loginData = {
             username: username,
             password: password,
@@ -85,31 +75,34 @@ const LoginCard = () => {
             const responseData = await response.json();
 
             if (response.ok && responseData.success) {
-                // Handle successful login here
-                setLoginMessage('Login successful');
-                console.log('Unique ID:', responseData.unique_id);
-        
-                localStorage.setItem('unique_id', responseData.unique_id);
-        
-                // Call the onLogin callback to update isLoggedIn in App.js
-                
-              } else {
-                // Handle login error here
+                console.log('Token:', responseData.token);
+                console.log('response data', responseData);
+
+                localStorage.setItem('token', responseData.token);
+
+               let toast;
+
+                navigate('/table');
+            } else {
                 console.error('Login failed');
             }
         } catch (error) {
             console.error('Error:', error);
+
+            toastRef.current.show({
+                severity: 'error',
+                summary: 'error',
+                detail: 'Login failed. Please check your credentials.',
+            });
         }
     };
-
 
     return (
         <>
             <Navbar />
             <div style={loginContainerStyle}>
-                <style>{keyframesStyle}</style>
                 <div style={loginCardStyle}>
-                    <i className='bx bx-user' style={{ fontSize: '36px', marginBottom: '15px' }}></i>
+                    <i className='bx bx-user' style={iconStyle}></i>
                     <h2 className='mb-4'>Login</h2>
                     <form>
                         <input
@@ -132,6 +125,10 @@ const LoginCard = () => {
                     </form>
                 </div>
             </div>
+            <div className="card flex justify-content-center">
+                <Toast ref={toastRef} />
+                {/* <Button onClick={show} label="Show" /> */}
+            </div>  
         </>
     );
 };

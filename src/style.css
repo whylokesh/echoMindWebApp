@@ -338,7 +338,7 @@ body {
 .navbar {
     background-color: var(--white-1);
     position: absolute;
-    top: 100%;
+    top: 11%;
     left: 50%;
     transform: translateX(-50%);
     max-width: calc(100% - 30px);
@@ -736,6 +736,7 @@ body {
     outline-offset: 0;
     margin-block-end: 15px;
 }
+
 
 .input-field::-webkit-inner-spin-button {
     display: none;
@@ -1582,3 +1583,10 @@ textarea.input-field {
 }
 
 /* ... your remaining styles ... */
+
+.cont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

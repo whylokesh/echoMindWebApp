@@ -1,8 +1,11 @@
 import React from 'react'
 import '../style.css';
 import Navbar from './Navbar';
-
+import ctaBackground from '../images/cta-bg.jpg'
 const Home = () => {
+    const backgroundStyles = {
+        backgroundImage: `url(${ctaBackground})`
+    };
     return (
         <>
             <Navbar />
@@ -248,8 +251,8 @@ const Home = () => {
                 </div>
             </section> */}
 
-            <section className="section cta" aria-label="cta" style={{ backgroundImage: `url('./assets/images/cta-bg.jpg')` }}>
-                <div className="container">
+            <section className="section picture cta" aria-label="cta" style={backgroundStyles}>
+                <div className="container cont">
                     <p className="cta-subtitle">App is in Testing</p>
                     <h2 className="h2 section-title">Experience the Power of EchoMind Beta Version</h2>
                     {/* <a href="https://wa.me/+919772747999?text=I%20want%20to%20test%20your%20whastapp%20chat%20Bot" className="btn btn-secondary">Try The Beta Version</a> */}
