@@ -75,7 +75,7 @@ export default function Table() {
         task_end_time: editTaskData.endTime,
       };
 
-      const response = await fetch('http://localhost:3000/update-event', {
+      const response = await fetch('http://localhost:3000/up-event', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ export default function Table() {
         toastRef.current.show({
           severity: 'success',
           summary: 'success',
-          detail: 'Login successful',
+          detail: 'Task updated successfully',
         });
         setUserTasks(updatedTasks);
       } else {
@@ -258,6 +258,12 @@ export default function Table() {
         className="p-button-text fs-3"
         onClick={handleEditTask}
       />
+    </div>
+  );
+  const addDialogFooter = (
+    <div>
+      <Button label="Cancel" icon="pi pi-times" className="p-button-text fs-3" onClick={() => setIsAddDialogVisible(false)} />
+      <Button label="Add" icon="pi pi-check" className="p-button-text fs-3" onClick={handleAddTask} />
     </div>
   );
 
@@ -507,16 +513,12 @@ export default function Table() {
         </div>
       )}
 
-      <Dialog visible={isAddDialogVisible} className="w-75" onHide={() => setIsAddDialogVisible(false)} header="Add New Task">
+      <Dialog visible={isAddDialogVisible} className="w-75" onHide={() => setIsAddDialogVisible(false)} header="Add New Task" footer={addDialogFooter}>
         <div className="p-fluid">
           <div className="p-field">
             {/* <label htmlFor="newTask">New Task</label> */}
             <InputText id="newTask" className="fs-4" value={newTask} onChange={(e) => setNewTask(e.target.value)} placeholder="Enter a new task" />
           </div>
-        </div>
-        <div className="p-dialog-footer">
-          <Button label="Cancel" icon="pi pi-times" className="p-button-text fs-3" onClick={() => setIsAddDialogVisible(false)} />
-          <Button label="Add" icon="pi pi-check" className="p-button-text fs-3" onClick={handleAddTask} />
         </div>
       </Dialog>
       <Dialog
